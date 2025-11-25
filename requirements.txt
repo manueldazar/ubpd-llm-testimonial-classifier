@@ -1,0 +1,33 @@
+# Notebook
+notebook
+jupyterlab
+rich
+
+# LLM provider (elige solo uno)
+openai
+# anthropic
+# together
+# azure-ai-openai
+# transformers
+# accelerate
+# sentencepiece
+
+# FastAPI microservice
+fastapi
+uvicorn[standard]
+
+# PostgreSQL
+psycopg2-binary
+# OR psycopg[binary]
+# SQLAlchemy
+
+# YAML parser
+pyyaml
+
+# JSON validation
+jsonschema
+
+# Utilities
+python-dotenv
+black
+isort
