@@ -53,9 +53,10 @@ It implements:
 
 ---
 
+```markdown
 ## 3. Detailed Mermaid Diagram
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A[Testimonial Input] --> B[Preprocessing]
     B --> C[Ontology Loader]
@@ -65,6 +66,7 @@ flowchart TD
     F --> G[Validation<br/>Ontology Constraints]
     G --> H[Structured Output]
     H --> I[Downstream Systems<br/>Dashboards, Routing, Evaluation]
+</div>
 ```
 
 ---
