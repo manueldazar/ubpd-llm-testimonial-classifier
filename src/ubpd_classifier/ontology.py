@@ -5,10 +5,16 @@ Autor: Manuel Daza Ramirez
 """
 
 import yaml
+from pathlib import Path
 
 
-def load_ontology(path: str = "../ontology_ubpd.yaml") -> dict:
+def load_ontology(path: str = None) -> dict:
     """Carga la ontología UBPD desde YAML."""
+    if path is None:
+        # Resolve path relative to this module's directory
+        module_dir = Path(__file__).parent
+        path = module_dir / "ontology_ubpd.yaml"
+    
     with open(path, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
 

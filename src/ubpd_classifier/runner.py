@@ -10,7 +10,6 @@ import os
 from typing import Optional
 
 from classifier import classify_document
-from db import save_document_and_classification
 
 
 def read_text_from_file(path: str) -> str:
@@ -19,6 +18,12 @@ def read_text_from_file(path: str) -> str:
 
 
 def main():
+    # Import db only when needed (lazy import for optional database functionality)
+    try:
+        from db import save_document_and_classification
+    except ImportError:
+        save_document_and_classification = None
+    
     parser = argparse.ArgumentParser(
         description="Demo 2 – UBPD: Clasificador de documentos testimoniales"
     )
