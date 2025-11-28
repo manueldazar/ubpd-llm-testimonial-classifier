@@ -11,34 +11,22 @@ title: Tests – Summary / Resumen
 
 ## English Version {#english-version}
 
-The test suite covers:
+The suite covers:
 
-- Preprocessing (normalization, cleaning)
-- Ontology loading and serialization
-- Prompt construction
-- Classifier logic and routing
-- Runner CLI and file handling
-
-It is designed to be:
-
-- Fast (seconds on a laptop)
-- Deterministic (no external APIs)
-- Easy to extend (pytest-based)
+- Preprocessing  
+- Ontology loading  
+- Prompt construction  
+- Classifier logic  
+- Runner behavior  
 
 ---
 
-## Versión en Español {#spanish-version}
+## Spanish Version {#spanish-version}
 
-La suite de pruebas cubre:
+La suite cubre:
 
-- Preprocesamiento (normalización, limpieza)
-- Carga y serialización de la ontología
-- Construcción de prompts
-- Lógica del clasificador y ruteo
-- CLI del runner y manejo de archivos
-
-Está diseñada para ser:
-
-- Rápida (segundos en un portátil)
-- Determinista (sin APIs externas)
-- Fácil de extender (basada en pytest)
+- Preprocesamiento  
+- Carga de ontología  
+- Construcción de prompts  
+- Lógica del clasificador  
+- Comportamiento del runner  

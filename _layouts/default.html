@@ -7,6 +7,15 @@
     {% seo %}
     <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
     <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        mermaid.initialize({
+          startOnLoad: true,
+          securityLevel: "loose"
+        });
+      });
+    </script>
   </head>
   <body>
     <div class="page-wrapper">
@@ -20,13 +29,11 @@
         </div>
         <nav class="sidebar-nav">
           <ul>
-            <li><a href="{{ '/' | relative_url }}"><strong>Home</strong></a></li>
-            <li><a href="{{ '/#english-version' | relative_url }}">English</a></li>
-            <li><a href="{{ '/#spanish-version' | relative_url }}">Español</a></li>
+            <li><a href="{{ '/' | relative_url }}">Home</a></li>
             <li><a href="{{ '/docs/architecture.html' | relative_url }}">Architecture</a></li>
             <li><a href="{{ '/docs/ontology.html' | relative_url }}">Ontology</a></li>
-<!--            <li><a href="{{ '/docs/api.html' | relative_url }}">API</a></li> -->
-            <li><a href="https://github.com/manueldazar/ubpd-llm-testimonial-classifier">Repository</a></li>
+            <li><a href="{{ '/docs/api.html' | relative_url }}">API</a></li>
+            <li><a href="{{ '/docs/demo.html' | relative_url }}">Demo</a></li>
             <li><strong>Tests</strong></li>
             <ul>
               <li><a href="{{ '/docs/tests/index.html' | relative_url }}">Overview</a></li>
@@ -43,14 +50,10 @@
         <article class="content-inner">
           {{ content }}
         </article>
+        <footer class="site-footer">
+          <p>© 2025 Manuel Daza · UBPD LLM Testimonial Classifier · MIT License</p>
+        </footer>
       </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>
-      mermaid.initialize({
-        startOnLoad: true,
-        securityLevel: "loose"
-      });
-    </script>
   </body>
 </html>

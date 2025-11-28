@@ -6,10 +6,8 @@
   --accent: #2aa198;
   --accent-light: #93a1a1;
   --text-main: #073642;
-  --text-muted: #586e75;
   --border-soft: #eee;
   --shadow-soft: 0 10px 30px rgba(0,0,0,0.07);
-  --radius-lg: 16px;
   --radius-xl: 22px;
 }
 
@@ -105,7 +103,7 @@ body {
 
 .content-inner {
   max-width: 960px;
-  margin: 0 auto 48px auto;
+  margin: 0 auto 16px auto;
   background: var(--bg-content);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
@@ -113,25 +111,29 @@ body {
   border: 1px solid var(--border-soft);
 }
 
+.site-footer {
+  max-width: 960px;
+  margin: 0 auto 32px auto;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--accent-light);
+}
+
 @media (max-width: 900px) {
   .page-wrapper {
     flex-direction: column;
   }
-
   .sidebar {
     width: 100%;
     position: relative;
     min-height: auto;
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
-
   .content {
     padding: 18px 14px;
   }
-
   .content-inner {
     padding: 20px 18px 26px 18px;
-    border-radius: var(--radius-lg);
   }
 }
 
@@ -139,24 +141,7 @@ body {
   margin-top: 0;
 }
 
-.content-inner h1,
-.content-inner h2,
-.content-inner h3 {
-  color: var(--text-main);
-}
-
-.content-inner h2 {
-  margin-top: 1.8rem;
-  border-bottom: 1px solid var(--border-soft);
-  padding-bottom: 0.4rem;
-}
-
-.content-inner h3 {
-  margin-top: 1.4rem;
-}
-
 .content-inner code {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   background: #f7f7f7;
   padding: 2px 4px;
   border-radius: 4px;
@@ -171,35 +156,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* Tables */
-.content-inner table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 14px 0;
-}
-
-.content-inner th,
-.content-inner td {
-  border: 1px solid var(--border-soft);
-  padding: 6px 8px;
-  font-size: 0.85rem;
-}
-
-.content-inner th {
-  background: #f9f9f9;
-}
-
-/* Links */
-.content-inner a {
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.content-inner a:hover {
-  text-decoration: underline;
-}
-
-/* Badge rows inside markdown */
-.content-inner p.badge-row {
+.badge-row {
   text-align: center;
+  margin-bottom: 16px;
 }

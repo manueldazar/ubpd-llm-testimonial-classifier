@@ -11,28 +11,22 @@ title: Tests – Checklist / Lista de Verificación
 
 ## English Version {#english-version}
 
-- [x] `tests/` folder created  
-- [x] `conftest.py` with shared fixtures  
-- [x] Tests for preprocessing  
-- [x] Tests for ontology loading  
-- [x] Tests for prompt construction  
-- [x] Tests for classifier  
-- [x] Tests for runner  
-- [x] All tests pass locally  
-- [x] No real API calls in tests  
-- [x] No real DB access in tests  
+- [x] tests/ folder created  
+- [x] pytest configured  
+- [x] Preprocessing tests  
+- [x] Ontology tests  
+- [x] Prompt tests  
+- [x] Classifier tests  
+- [x] Runner tests  
 
 ---
 
-## Versión en Español {#spanish-version}
+## Spanish Version {#spanish-version}
 
-- [x] Carpeta `tests/` creada  
-- [x] `conftest.py` con fixtures compartidos  
-- [x] Pruebas para preprocesamiento  
-- [x] Pruebas para carga de ontología  
-- [x] Pruebas para construcción de prompts  
-- [x] Pruebas para el clasificador  
-- [x] Pruebas para el runner  
-- [x] Todas las pruebas pasan localmente  
-- [x] Ninguna prueba llama APIs reales  
-- [x] Ninguna prueba accede a bases de datos reales  
+- [x] Carpeta tests/ creada  
+- [x] pytest configurado  
+- [x] Pruebas de preprocesamiento  
+- [x] Pruebas de ontología  
+- [x] Pruebas de prompts  
+- [x] Pruebas de clasificador  
+- [x] Pruebas de runner  

@@ -1,5 +1,5 @@
 title: "UBPD LLM Testimonial Classifier"
-description: "Bilingual demo of an LLM-based testimonial document classifier for the UBPD using LLMs."
+description: "Bilingual documentation and demo site for the UBPD LLM testimonial classifier – architecture, ontology, API, tests, and UI mockup."
 theme: jekyll-theme-cayman
 
 lang: es
@@ -17,13 +17,6 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-defaults:
-  - scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "default"
-
 nav:
   - title: "Home"
     url: "/"
@@ -33,7 +26,7 @@ nav:
     url: "/docs/ontology.html"
   - title: "API"
     url: "/docs/api.html"
+  - title: "Demo"
+    url: "/docs/demo.html"
   - title: "Tests"
     url: "/docs/tests/index.html"
-  - title: "Repository"
-    url: "https://github.com/manueldazar/ubpd-llm-testimonial-classifier"
