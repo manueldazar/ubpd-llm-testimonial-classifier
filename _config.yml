@@ -36,4 +36,4 @@ nav:
   - title: "Tests"
     url: "/docs/tests/index.html"
   - title: "Repository"
-    url: "https://github.com/manueldazar/ubpd-llm-demo-clasificador-testimonios"
+    url: "https://github.com/manueldazar/ubpd-llm-testimonial-classifier"
