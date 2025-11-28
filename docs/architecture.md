@@ -53,7 +53,6 @@ It implements:
 
 ---
 
-```markdown
 ## 3. Detailed Mermaid Diagram
 
 <div class="mermaid">
@@ -67,7 +66,6 @@ flowchart TD
     G --> H[Structured Output]
     H --> I[Downstream Systems<br/>Dashboards, Routing, Evaluation]
 </div>
-```
 
 ---
 
@@ -141,7 +139,7 @@ Incluye:
 
 ## 3. Diagrama Detallado (Mermaid)
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     A[Texto Testimonial] --> B[Preprocesamiento]
     B --> C[Cargador de Ontología]
@@ -151,7 +149,7 @@ flowchart TD
     F --> G[Validación<br/>Ontología]
     G --> H[Salida Estructurada]
     H --> I[Sistemas Posteriores<br/>Ruteo, Tableros, Evaluación]
-```
+</div>
 
 ---
 
