@@ -91,51 +91,86 @@ A production-grade system must include:
 
 > This page is a **front-end mockup**. It does not call real APIs yet, but it illustrates how a future web demo could work.
 
-<form id="demo-form">
-  <label for="demo-text"><strong>Testimonial Text</strong></label><br>
-  <textarea id="demo-text" name="demo-text" rows="7" style="width:100%;"></textarea><br><br>
-  <button type="button" id="demo-run">Run Classifier (Mock)</button>
+<form id="demo-form-full">
+  <label><strong>Testimonial Text</strong></label><br>
+  <textarea id="demo-text-full" rows="8" style="width:100%;"></textarea><br><br>
+
+  <button type="button" id="demo-run-full">Run Classifier (Mock)</button>
 </form>
 
-<pre id="demo-output" style="margin-top:1rem;">
+<pre id="demo-output-full" style="margin-top:1rem;">
 {
   "document_type": null,
   "actors": [],
   "events": [],
-  "territory": {},
+  "territory": {
+    "region": null,
+    "rurality": null
+  },
+  "time_period": null,
   "priority": null
 }
 </pre>
 
 <script>
   (function() {
-    var btn = document.getElementById('demo-run');
-    var txt = document.getElementById('demo-text');
-    var out = document.getElementById('demo-output');
-    if (!btn || !txt || !out) return;
+    const ontology = {
+      document_types: ["victim_direct", "family_member", "witness", "institutional_document"],
 
-    btn.addEventListener('click', function() {
-      var text = (txt.value || "").toLowerCase();
-      var result = {
-        document_type: "unknown",
+      armed_groups: ["FARC", "AUC", "ELN", "Public Forces"],
+      victims: ["direct_victim", "indirect_victim", "community"],
+
+      events: {
+        disappearance: ["forced_disappearance", "kidnapping"],
+        violence: ["homicide", "torture", "threats"]
+      },
+
+      regions: ["Antioquia", "Meta", "Cauca", "Norte de Santander"],
+      rurality: ["rural", "urban", "mixed"],
+
+      time_periods: ["1980–1990", "1990–2000", "2000–2010", "2010–2020"]
+    };
+
+    function matchFromText(text, list) {
+      text = text.toLowerCase();
+      return list.filter(item => text.includes(item.toLowerCase()));
+    }
+
+    document.getElementById("demo-run-full").addEventListener("click", function() {
+      const txt = (document.getElementById("demo-text-full").value || "").toLowerCase();
+
+      let result = {
+        document_type: "victim_direct",    // default assumption
         actors: [],
         events: [],
-        territory: {},
+        territory: { region: null, rurality: null },
+        time_period: null,
         priority: "medium"
       };
 
-      if (text.includes("desapar") || text.includes("missing")) {
-        result.events.push("forced_disappearance");
-        result.priority = "high";
-      }
-      if (text.includes("farc")) {
-        result.actors.push("FARC");
-      }
-      if (text.includes("auc")) {
-        result.actors.push("AUC");
+      // 1. Actors
+      result.actors.push(...matchFromText(txt, ontology.armed_groups));
+      result.actors.push(...matchFromText(txt, ontology.victims));
+
+      // 2. Events
+      for (const category in ontology.events) {
+        result.events.push(...matchFromText(txt, ontology.events[category]));
       }
 
-      out.textContent = JSON.stringify(result, null, 2);
+      // 3. Territory (simple heuristics)
+      result.territory.region = ontology.regions.find(r => txt.includes(r.toLowerCase())) || null;
+      result.territory.rurality = ontology.rurality.find(r => txt.includes(r)) || null;
+
+      // 4. Time period (approx heuristic)
+      if (txt.match(/199\d/)) result.time_period = "1990–2000";
+      if (txt.match(/200\d/)) result.time_period = "2000–2010";
+
+      // 5. Priority (simulate)
+      if (txt.includes("desapar") || txt.includes("missing")) result.priority = "high";
+      if (txt.includes("homicid")) result.priority = "high";
+
+      document.getElementById("demo-output-full").textContent =
+        JSON.stringify(result, null, 2);
     });
   })();
 </script>
@@ -214,54 +249,86 @@ Una versión real del sistema debe incorporar:
 
 Esta página ilustra cómo podría verse una futura **demo web**, sin exponer datos reales ni claves de API.
 
-<form id="demo-form-es">
-  <label for="demo-text-es"><strong>Texto del testimonio</strong></label><br>
-  <textarea id="demo-text-es" name="demo-text-es" rows="8" style="width:100%;"></textarea><br><br>
-  <button type="button" id="demo-run-es">Ejecutar Clasificador (Simulación)</button>
+<form id="demo-form-es-full">
+  <label><strong>Texto del testimonio</strong></label><br>
+  <textarea id="demo-text-es-full" rows="8" style="width:100%;"></textarea><br><br>
+
+  <button type="button" id="demo-run-es-full">Ejecutar Clasificador (Simulación)</button>
 </form>
 
-<pre id="demo-output-es" style="margin-top:1rem;">
+<pre id="demo-output-es-full" style="margin-top:1rem;">
 {
   "tipo_documento": null,
   "actores": [],
   "hechos": [],
-  "territorio": {},
+  "territorio": {
+    "region": null,
+    "ruralidad": null
+  },
+  "periodo": null,
   "prioridad": null
 }
 </pre>
 
 <script>
   (function() {
-    var btn = document.getElementById('demo-run-es');
-    var txt = document.getElementById('demo-text-es');
-    var out = document.getElementById('demo-output-es');
-    if (!btn || !txt || !out) return;
+    const ont = {
+      tipos: ["victima_directa", "familiar", "testigo", "documento_institucional"],
 
-    btn.addEventListener('click', function() {
-      var text = (txt.value || "").toLowerCase();
-      var result = {
-        tipo_documento: "desconocido",
+      grupos_armados: ["FARC", "AUC", "ELN", "Fuerza Pública"],
+      victimas: ["victima_directa", "victima_indirecta", "comunidad"],
+
+      hechos: {
+        desaparicion: ["desaparicion_forzada", "secuestro"],
+        violencia: ["homicidio", "tortura", "amenazas"]
+      },
+
+      regiones: ["Antioquia", "Meta", "Cauca", "Norte de Santander"],
+      ruralidad: ["rural", "urbano", "mixto"],
+
+      periodos: ["1980–1990", "1990–2000", "2000–2010", "2010–2020"]
+    };
+
+    function match(text, list) {
+      text = text.toLowerCase();
+      return list.filter(item => text.includes(item.toLowerCase()));
+    }
+
+    document.getElementById("demo-run-es-full").addEventListener("click", function() {
+      const txt = (document.getElementById("demo-text-es-full").value || "").toLowerCase();
+
+      let out = {
+        tipo_documento: "victima_directa",
         actores: [],
         hechos: [],
-        territorio: {},
+        territorio: { region: null, ruralidad: null },
+        periodo: null,
         prioridad: "media"
       };
 
-      if (text.includes("desapar") || text.includes("perdido") || text.includes("missing")) {
-        result.hechos.push("desaparicion_forzada");
-        result.prioridad = "alta";
-      }
-      if (text.includes("farc")) {
-        result.actores.push("FARC");
-      }
-      if (text.includes("auc")) {
-        result.actores.push("AUC");
-      }
-      if (text.includes("meta")) {
-        result.territorio.region = "Meta";
+      // Actores
+      out.actores.push(...match(txt, ont.grupos_armados));
+      out.actores.push(...match(txt, ont.victimas));
+
+      // Hechos
+      for (const cat in ont.hechos) {
+        out.hechos.push(...match(txt, ont.hechos[cat]));
       }
 
-      out.textContent = JSON.stringify(result, null, 2);
+      // Territorio
+      out.territorio.region = ont.regiones.find(r => txt.includes(r.toLowerCase())) || null;
+      out.territorio.ruralidad = ont.ruralidad.find(r => txt.includes(r)) || null;
+
+      // Periodo
+      if (txt.match(/199\d/)) out.periodo = "1990–2000";
+      if (txt.match(/200\d/)) out.periodo = "2000–2010";
+
+      // Prioridad
+      if (txt.includes("desapar") || txt.includes("perdido")) out.prioridad = "alta";
+      if (txt.includes("homicid")) out.prioridad = "alta";
+
+      document.getElementById("demo-output-es-full").textContent =
+        JSON.stringify(out, null, 2);
     });
   })();
 </script>
