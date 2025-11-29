@@ -179,24 +179,23 @@ flowchart TD
 - Define un esquema JSON estricto  
 - Incluye todas las etiquetas de la ontología  
 - Describe responsabilidades del clasificador  
-- Minimiza ambigüedad  
+- Aplica una salida determinista  
 
 ### User Prompt
 - Contiene el texto testimonial  
 - Solicita clasificación únicamente dentro del esquema JSON  
-- Evita instrucciones abiertas  
+- Evita la ambiguedad o las instrucciones abiertas  
 
 ---
 
 ## 4. Estrategia de Evaluación
 
-Con un conjunto de datos anotado, se podrán calcular:
+Una vez disponible un conjunto de datos etiquetado, el clasificador puede evaluarse mediante:
 
-- **Precisión / Recall por categoría**  
-- **Matrices de confusión**  
-- **Acuerdo entre LLM y anotadores humanos**  
-- **Pruebas de estrés** con testimonios ruidosos o incompletos  
-
+- **Precisión/Recuperación por categoría**  
+- **Matrices de confusión para clases superpuestas**  
+- **Concordancia entre anotadores LLM y codificadores humanos**  
+- **Pruebas de estrés  con testimonios ruidosos, incompletos o contradictorios** 
 ---
 
 ## 5. Gobernanza de Datos
@@ -214,6 +213,58 @@ Una versión real del sistema debe incorporar:
 ## 6. Probar el Clasificador (Mockup)
 
 Esta página ilustra cómo podría verse una futura **demo web**, sin exponer datos reales ni claves de API.
+
+<form id="demo-form-es">
+  <label for="demo-text-es"><strong>Texto del testimonio</strong></label><br>
+  <textarea id="demo-text-es" name="demo-text-es" rows="8" style="width:100%;"></textarea><br><br>
+  <button type="button" id="demo-run-es">Ejecutar Clasificador (Simulación)</button>
+</form>
+
+<pre id="demo-output-es" style="margin-top:1rem;">
+{
+  "tipo_documento": null,
+  "actores": [],
+  "hechos": [],
+  "territorio": {},
+  "prioridad": null
+}
+</pre>
+
+<script>
+  (function() {
+    var btn = document.getElementById('demo-run-es');
+    var txt = document.getElementById('demo-text-es');
+    var out = document.getElementById('demo-output-es');
+    if (!btn || !txt || !out) return;
+
+    btn.addEventListener('click', function() {
+      var text = (txt.value || "").toLowerCase();
+      var result = {
+        tipo_documento: "desconocido",
+        actores: [],
+        hechos: [],
+        territorio: {},
+        prioridad: "media"
+      };
+
+      if (text.includes("desapar") || text.includes("perdido") || text.includes("missing")) {
+        result.hechos.push("desaparicion_forzada");
+        result.prioridad = "alta";
+      }
+      if (text.includes("farc")) {
+        result.actores.push("FARC");
+      }
+      if (text.includes("auc")) {
+        result.actores.push("AUC");
+      }
+      if (text.includes("meta")) {
+        result.territorio.region = "Meta";
+      }
+
+      out.textContent = JSON.stringify(result, null, 2);
+    });
+  })();
+</script>
 
 ---
 
