@@ -1,6 +1,6 @@
 ---
 layout: default
-title: UBPD LLM Testimonial Classifier – Project Overview
+title: LLM Testimonial Classifier – Project Overview
 ---
 
 # UBPD LLM Testimonial Classifier  
@@ -20,7 +20,7 @@ title: UBPD LLM Testimonial Classifier – Project Overview
 
 ## 1. What This Project Does
 
-This is a **YAML-driven LLM classifier** aligned with the workflows of the *Unidad de Búsqueda de Personas Dadas por Desaparecidas (UBPD)*.
+This is a **YAML-driven LLM classifier.** This could be useful for human rights or justice organizations.*.
 
 The system:
 
@@ -190,7 +190,7 @@ A production-grade system must include:
 
 ## 1. Qué Hace Este Proyecto
 
-Este repositorio presenta un **clasificador basado en LLM** y guiado por una ontología YAML, diseñado para apoyar tareas de análisis de testimonios en la **UBPD**.
+Este repositorio presenta un **clasificador basado en LLM** y guiado por una ontología YAML, diseñado para apoyar tareas de análisis de testimonios.
 
 ---
 

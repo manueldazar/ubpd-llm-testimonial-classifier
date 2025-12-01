@@ -1,4 +1,4 @@
-# UBPD LLM – Full Bilingual Docs Site
+# LLM Testimonial Classifier – Full Bilingual Docs Site
 
 **Available versions:**  
 - [English Full Version](README_FULL.md)  
