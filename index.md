@@ -3,7 +3,7 @@ layout: default
 title: LLM Testimonial Classifier – Project Overview
 ---
 
-# UBPD LLM Testimonial Classifier  
+# LLM Testimonial Classifier  
 **Bilingual Project Site (English / Español)**  
 
 <p class="badge-row">
