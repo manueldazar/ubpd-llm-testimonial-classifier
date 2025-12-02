@@ -2,12 +2,9 @@
 layout: default
 title: LLM Testimonial Classifier
 description: Clasificador automático de documentos testimoniales para organizaciones de derechos humanos | Automatic testimonial document classifier for human rights organizations
-lang: es
 ---
 
 # LLM Testimonial Classifier
-
-[🇪🇸 Español](#español) | [🇺🇸 English](#english)
 
 ---
 
@@ -111,17 +108,6 @@ Este clasificador está diseñado para:
 - **Unidades de Búsqueda** — Priorización de casos
 - **Tribunales de Justicia Transicional** — Categorización de evidencia
 - **Organizaciones Internacionales** — Documentación humanitaria
-
----
-
-### Documentación
-
-| Sección | Descripción |
-|---------|-------------|
-| [Arquitectura](docs/architecture.html) | Diseño técnico del sistema |
-| [Ontología](docs/ontology.html) | Vocabulario controlado completo |
-| [API](docs/api.html) | Referencia de funciones |
-| [Demo](docs/demo.html) | Ejemplos interactivos |
 
 ---
 
@@ -240,17 +226,6 @@ This classifier is designed for:
 - **Search Units** — Prioritizing cases
 - **Transitional Justice Tribunals** — Categorizing evidence
 - **International Organizations** — Humanitarian documentation
-
----
-
-### Documentation
-
-| Section | Description |
-|---------|-------------|
-| [Architecture](docs/architecture.html) | System technical design |
-| [Ontology](docs/ontology.html) | Complete controlled vocabulary |
-| [API](docs/api.html) | Function reference |
-| [Demo](docs/demo.html) | Interactive examples |
 
 ---
 
