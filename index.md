@@ -24,7 +24,9 @@ lang: es
 }
 </style>
 
-# 📄 Clasificador de Documentos Testimoniales UBPD {: #es }
+<a id="es"></a>
+
+# 📄 Clasificador de Documentos Testimoniales UBPD
 
 > **Sistema de clasificación automática de testimonios del conflicto armado colombiano mediante Inteligencia Artificial**
 
@@ -166,7 +168,9 @@ AI Engineer
 
 ***
 
-# 📄 UBPD Testimonial Document Classifier {: #en }
+<a id="en"></a>
+
+# 📄 UBPD Testimonial Document Classifier
 
 > **Automatic classification system for Colombian armed conflict testimonies using Artificial Intelligence**
 
