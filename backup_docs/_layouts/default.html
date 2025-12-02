@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'es' }}">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% seo %}
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+    <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <a href="{{ '/' | relative_url }}" class="logo-link">
+            <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="UBPD LLM Logo" class="logo-img">
+          </a>
+          <div class="site-title">{{ site.title }}</div>
+          <div class="site-subtitle">{{ site.description }}</div>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li><a href="{{ '/' | relative_url }}"><strong>Home</strong></a></li>
+            <li><a href="{{ '/#english-version' | relative_url }}">English</a></li>
+            <li><a href="{{ '/#spanish-version' | relative_url }}">Español</a></li>
+            <li><a href="{{ '/docs/architecture.html' | relative_url }}">Architecture</a></li>
+            <li><a href="{{ '/docs/ontology.html' | relative_url }}">Ontology</a></li>
+<!--            <li><a href="{{ '/docs/api.html' | relative_url }}">API</a></li> -->
+            <li><a href="https://github.com/manueldazar/ubpd-llm-testimonial-classifier">Repository</a></li>
+            <li><strong>Tests</strong></li>
+            <ul>
+              <li><a href="{{ '/docs/tests/index.html' | relative_url }}">Overview</a></li>
+              <li><a href="{{ '/docs/tests/quick_start.html' | relative_url }}">Quick Start</a></li>
+              <li><a href="{{ '/docs/tests/summary.html' | relative_url }}">Summary</a></li>
+              <li><a href="{{ '/docs/tests/visual_overview.html' | relative_url }}">Visual Overview</a></li>
+              <li><a href="{{ '/docs/tests/checklist.html' | relative_url }}">Checklist</a></li>
+              <li><a href="{{ '/docs/tests/full_tests.html' | relative_url }}">Complete Suite</a></li>
+            </ul>
+          </ul>
+        </nav>
+      </aside>
+      <main class="content">
+        <article class="content-inner">
+          {{ content }}
+        </article>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        securityLevel: "loose"
+      });
+    </script>
+  </body>
+</html>
