@@ -54,26 +54,17 @@ Este proyecto desarrolla un **clasificador inteligente** para apoyar a la [Unida
 
 Un sistema que combina **Modelos de Lenguaje (LLM)** con una **ontología controlada** para:
 
-- ✅ Clasificar documentos automáticamente  
-- ✅ Garantizar consistencia mediante vocabularios estandarizados  
-- ✅ Calcular scores de prioridad para enrutamiento  
-- ✅ Extraer fragmentos clave para análisis humano  
+- �?Clasificar documentos automáticamente  
+- �?Garantizar consistencia mediante vocabularios estandarizados  
+- �?Calcular scores de prioridad para enrutamiento  
+- �?Extraer fragmentos clave para análisis humano  
 
 ***
 
-## 🏗️ Arquitectura
+## 🏗�?Arquitectura
 
 ```text
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   Documento      │────▶│   Preprocesado   │────▶│   Clasificación  │
-│   Testimonial    │     │   + Normalización│     │   LLM (GPT-4o)   │
-└──────────────────┘     └──────────────────┘     └────────┬─────────┘
-                                                           │
-┌──────────────────┐     ┌──────────────────┐              │
-│   Base de Datos  │◀────│   Validación     │◀─────────────┘
-│   PostgreSQL     │     │   + Ontología    │
-└──────────────────┘     └──────────────────┘
-```
+┌──────────────────�?    ┌──────────────────�?    ┌──────────────────�?�?  Documento      │────▶│   Preprocesado   │────▶│   Clasificación  �?�?  Testimonial    �?    �?  + Normalización�?    �?  LLM (GPT-4o)   �?└──────────────────�?    └──────────────────�?    └────────┬─────────�?                                                           �?┌──────────────────�?    ┌──────────────────�?             �?�?  Base de Datos  │◀────�?  Validación     │◀─────────────�?�?  PostgreSQL     �?    �?  + Ontología    �?└──────────────────�?    └──────────────────�?```
 
 ***
 
@@ -149,7 +140,7 @@ python src/runner.py --text "Mi hermano desapareció en 1998 en Urabá..." --no-
 
 | Sección | Descripción |
 |---------|-------------|
-| [🏛️ Arquitectura](docs/architecture.html) | Diseño técnico del sistema |
+| [🏛�?Arquitectura](docs/architecture.html) | Diseño técnico del sistema |
 | [📚 Ontología](docs/ontology.html) | Vocabulario controlado completo |
 | [🔌 API](docs/api.html) | Referencia de funciones |
 | [🎮 Demo](docs/demo.html) | Ejemplos interactivos |
@@ -157,7 +148,7 @@ python src/runner.py --text "Mi hermano desapareció en 1998 en Urabá..." --no-
 
 ***
 
-## 👨‍💻 Autor
+## 👨‍�?Autor
 
 **Manuel Daza Ramírez**  
 AI Engineer  
@@ -198,26 +189,17 @@ This project develops an **intelligent classifier** to support the [Unit for the
 
 A system that combines **Large Language Models (LLM)** with a **controlled ontology** to:
 
-- ✅ Automatically classify documents  
-- ✅ Ensure consistency through standardized vocabularies  
-- ✅ Calculate priority scores for routing  
-- ✅ Extract key fragments for human analysis  
+- �?Automatically classify documents  
+- �?Ensure consistency through standardized vocabularies  
+- �?Calculate priority scores for routing  
+- �?Extract key fragments for human analysis  
 
 ***
 
-## 🏗️ Architecture
+## 🏗�?Architecture
 
 ```text
-┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   Testimonial    │────▶│   Preprocessing  │────▶│   Classification │
-│   Document       │     │   + Normalization│     │   LLM (GPT-4o)   │
-└──────────────────┘     └──────────────────┘     └────────┬─────────┘
-                                                           │
-┌──────────────────┐     ┌──────────────────┐              │
-│   PostgreSQL     │◀────│   Validation     │◀─────────────┘
-│   Database       │     │   + Ontology     │
-└──────────────────┘     └──────────────────┘
-```
+┌──────────────────�?    ┌──────────────────�?    ┌──────────────────�?�?  Testimonial    │────▶│   Preprocessing  │────▶│   Classification �?�?  Document       �?    �?  + Normalization�?    �?  LLM (GPT-4o)   �?└──────────────────�?    └──────────────────�?    └────────┬─────────�?                                                           �?┌──────────────────�?    ┌──────────────────�?             �?�?  PostgreSQL     │◀────�?  Validation     │◀─────────────�?�?  Database       �?    �?  + Ontology     �?└──────────────────�?    └──────────────────�?```
 
 ***
 
@@ -293,7 +275,7 @@ python src/runner.py --text "My brother disappeared in 1998 in Urabá..." --no-d
 
 | Section | Description |
 |---------|-------------|
-| [🏛️ Architecture](docs/architecture.html) | System technical design |
+| [🏛�?Architecture](docs/architecture.html) | System technical design |
 | [📚 Ontology](docs/ontology.html) | Complete controlled vocabulary |
 | [🔌 API](docs/api.html) | Function reference |
 | [🎮 Demo](docs/demo.html) | Interactive examples |
@@ -329,12 +311,12 @@ This classifier aims to accelerate the processing of these testimonies while mai
 
 ### Validation Pipeline
 - Ontology-based code validation  
-- Business rules enforcement (e.g., TD0 → RU0)  
+- Business rules enforcement (e.g., TD0 �?RU0)  
 - Priority score calculation for case routing  
 
 ***
 
-## 👨‍💻 Author
+## 👨‍�?Author
 
 **Manuel Daza Ramírez**  
 AI Engineer  
@@ -353,3 +335,17 @@ This is a **demonstration prototype**. All example testimonies are **synthetic**
 - Audit logging for accountability  
 - Compliance with sensitive data regulations  
 - Model quality monitoring  
+
+## Cr��dito Intelectual y Procedencia
+
+Este proyecto ��incluyendo su arquitectura, el dise?o de la ontolog��a, la estrategia de *prompt engineering*, el plan de evaluaci��n y la implementaci��n de referencia�� fue concebido, dise?ado y desarrollado por **Manuel Daza**. Todos los componentes conceptuales (formulaci��n del problema, justificaci��n del esquema de datos, ontolog��a de clasificaci��n, plantillas de *prompt*, criterios de evaluaci��n y flujos del demostrador) se originan en este repositorio y en su historial de *commits*.
+
+El c��digo, la documentaci��n y el enfoque metodol��gico se publican para ofrecer transparencia y fomentar una discusi��n responsable, y **no** constituyen autorizaci��n impl��cita para uso institucional, trabajo derivado con fines comerciales o despliegue operativo. Cualquier reutilizaci��n, adaptaci��n o implementaci��n institucional debe reconocer expl��citamente al autor original y cumplir con la licencia del proyecto.
+
+Si este proyecto se cita, referencia o utiliza como base para desarrollos posteriores, incluya la siguiente atribuci��n:
+
+**Manuel Daza �� Autor y Arquitecto Original**
+GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)
+URL del proyecto: *[insertar enlace]*
+
+Para colaboraci��n, pilotos o acompa?amiento en la implementaci��n, por favor contacte directamente al autor.

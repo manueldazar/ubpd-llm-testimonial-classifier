@@ -37,58 +37,27 @@ La clasificación manual de testimonios presenta varios desafíos:
 
 Este sistema utiliza un **LLM (Large Language Model)** con una **ontología controlada** para:
 
-- ✅ Clasificar automáticamente documentos según categorías predefinidas
-- ✅ Garantizar consistencia mediante vocabularios controlados
-- ✅ Calcular scores de prioridad para enrutamiento
-- ✅ Extraer fragmentos relevantes (highlights) para análisis posterior
-- ✅ Persistir resultados en PostgreSQL para análisis y auditoría
+- �?Clasificar automáticamente documentos según categorías predefinidas
+- �?Garantizar consistencia mediante vocabularios controlados
+- �?Calcular scores de prioridad para enrutamiento
+- �?Extraer fragmentos relevantes (highlights) para análisis posterior
+- �?Persistir resultados en PostgreSQL para análisis y auditoría
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## 🏗�?Arquitectura del Sistema
 
 ```
 Texto crudo del documento
-         │
-         ▼
-┌─────────────────────────────┐
-│   preprocessing.py          │  Normalización Unicode, limpieza
-│   preprocess_text()         │
-└─────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────┐
-│   prompts.py                │  Template few-shot + ontología
-│   build_user_prompt()       │
-└─────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────┐
-│   classifier.py             │  Llamada a OpenAI API (GPT-4o)
-│   call_llm()                │
-└─────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────┐
-│   classifier.py             │  Extracción y parsing JSON
-│   parse_model_response()    │
-└─────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────┐
-│   classifier.py             │  Validación contra ontología
-│   validate_and_fix()        │  + reglas de negocio + priority_score
-└─────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────┐
-│   db.py                     │  Persistencia en PostgreSQL
-│   save_document_and_        │  (opcional)
-│   classification()          │
-└─────────────────────────────┘
-         │
-         ▼
-Clasificación final validada + almacenada
+         �?         �?┌─────────────────────────────�?�?  preprocessing.py          �? Normalización Unicode, limpieza
+�?  preprocess_text()         �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  prompts.py                �? Template few-shot + ontología
+�?  build_user_prompt()       �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  classifier.py             �? Llamada a OpenAI API (GPT-4o)
+�?  call_llm()                �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  classifier.py             �? Extracción y parsing JSON
+�?  parse_model_response()    �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  classifier.py             �? Validación contra ontología
+�?  validate_and_fix()        �? + reglas de negocio + priority_score
+└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  db.py                     �? Persistencia en PostgreSQL
+�?  save_document_and_        �? (opcional)
+�?  classification()          �?└─────────────────────────────�?         �?         �?Clasificación final validada + almacenada
 ```
 
 ---
@@ -98,31 +67,26 @@ Clasificación final validada + almacenada
 ```
 ubpd-llm-testimonial-classifier/
 ├── src/
-│   ├── classifier.py         # Pipeline principal de clasificación
-│   ├── db.py                  # Conexión PostgreSQL y persistencia
-│   ├── ontology.py            # Carga y serialización de ontología
-│   ├── preprocessing.py       # Limpieza y normalización de texto
-│   ├── prompts.py             # System prompt y templates few-shot
-│   └── runner.py              # CLI para ejecución desde terminal
-│
-├── ontology_ubpd.yaml         # Ontología de clasificación UBPD
+�?  ├── classifier.py         # Pipeline principal de clasificación
+�?  ├── db.py                  # Conexión PostgreSQL y persistencia
+�?  ├── ontology.py            # Carga y serialización de ontología
+�?  ├── preprocessing.py       # Limpieza y normalización de texto
+�?  ├── prompts.py             # System prompt y templates few-shot
+�?  └── runner.py              # CLI para ejecución desde terminal
+�?├── ontology_ubpd.yaml         # Ontología de clasificación UBPD
 ├── requirements.txt           # Dependencias pip
 ├── environment.yml            # Entorno Conda (Windows)
 ├── .env                       # Variables de entorno (API keys, DB)
-│
-├── run-classifier-conda.ps1   # Script PowerShell (Conda)
+�?├── run-classifier-conda.ps1   # Script PowerShell (Conda)
 ├── run-classifier-gui.ps1     # Script PowerShell (GUI)
-│
-├── notebooks/
-│   └── UBPD_Demo_Clasificador_Testimonios_Commented.ipynb
-│
-├── docs/                      # Documentación Jekyll
-│   ├── architecture.html
-│   ├── ontology.html
-│   ├── api.html
-│   └── demo.html
-│
-├── _config.yml                # Configuración Jekyll para GitHub Pages
+�?├── notebooks/
+�?  └── UBPD_Demo_Clasificador_Testimonios_Commented.ipynb
+�?├── docs/                      # Documentación Jekyll
+�?  ├── architecture.html
+�?  ├── ontology.html
+�?  ├── api.html
+�?  └── demo.html
+�?├── _config.yml                # Configuración Jekyll para GitHub Pages
 └── README.md
 ```
 
@@ -340,29 +304,13 @@ El `priority_score` es un valor entre 0.0 y 1.0 calculado según:
 
 ---
 
-## 🗄️ Modelo de Base de Datos
+## 🗄�?Modelo de Base de Datos
 
 El sistema persiste documentos y clasificaciones en PostgreSQL con el siguiente esquema:
 
 ```
-┌─────────────────────┐
-│   doc_document      │──────┐
-│   (documento base)  │      │
-└─────────────────────┘      │
-                             │ 1:N
-┌─────────────────────┐      │
-│ doc_classification_ │◄─────┘
-│ run (ejecución)     │──────┬──────┬──────┬──────┐
-└─────────────────────┘      │      │      │      │
-                             │      │      │      │
-    ┌────────────────────────┼──────┼──────┼──────┼────────────────────┐
-    │                        │      │      │      │                    │
-    ▼                        ▼      ▼      ▼      ▼                    ▼
-┌─────────┐  ┌─────────┐  ┌─────┐  ┌─────┐  ┌─────┐  ┌─────────────────┐
-│ _labels │  │ _hecho  │  │_terr│  │_actor│ │_high│  │   raw_json      │
-│(1:1)    │  │ (1:N)   │  │(1:N)│  │(1:N) │ │(1:N)│  │   (JSONB)       │
-└─────────┘  └─────────┘  └─────┘  └─────┘  └─────┘  └─────────────────┘
-```
+┌─────────────────────�?�?  doc_document      │──────�?�?  (documento base)  �?     �?└─────────────────────�?     �?                             �?1:N
+┌─────────────────────�?     �?�?doc_classification_ │◄─────�?�?run (ejecución)     │──────┬──────┬──────┬──────�?└─────────────────────�?     �?     �?     �?     �?                             �?     �?     �?     �?    ┌────────────────────────┼──────┼──────┼──────┼────────────────────�?    �?                       �?     �?     �?     �?                   �?    �?                       �?     �?     �?     �?                   �?┌─────────�? ┌─────────�? ┌─────�? ┌─────�? ┌─────�? ┌─────────────────�?�?_labels �? �?_hecho  �? │_terr�? │_actor�?│_high�? �?  raw_json      �?�?1:1)    �? �?(1:N)   �? �?1:N)�? �?1:N) �?�?1:N)�? �?  (JSONB)       �?└─────────�? └─────────�? └─────�? └─────�? └─────�? └─────────────────�?```
 
 ### Tablas Principales
 
@@ -450,7 +398,7 @@ tipo_hecho:
 
 El sistema implementa las siguientes reglas automáticas:
 
-1. **TD0 → RU0**: Documentos no testimoniales no se enrutan
+1. **TD0 �?RU0**: Documentos no testimoniales no se enrutan
 2. **Actor por defecto**: Si no hay actor identificado, usar `["ACT0"]`
 3. **Territorio por defecto**: Si no hay ubicación, usar `["No identificado"]`
 4. **Validación de códigos**: Solo se aceptan códigos de la ontología
@@ -519,3 +467,17 @@ AI Engineer - Prototipo de clasificación de documentos testimoniales
 ## 📄 Licencia
 
 Este proyecto es un prototipo de demostración desarrollado para mostrar capacidades de clasificación automática de documentos testimoniales usando LLMs.
+
+## Cr��dito Intelectual y Procedencia
+
+Este proyecto ��incluyendo su arquitectura, el dise?o de la ontolog��a, la estrategia de *prompt engineering*, el plan de evaluaci��n y la implementaci��n de referencia�� fue concebido, dise?ado y desarrollado por **Manuel Daza**. Todos los componentes conceptuales (formulaci��n del problema, justificaci��n del esquema de datos, ontolog��a de clasificaci��n, plantillas de *prompt*, criterios de evaluaci��n y flujos del demostrador) se originan en este repositorio y en su historial de *commits*.
+
+El c��digo, la documentaci��n y el enfoque metodol��gico se publican para ofrecer transparencia y fomentar una discusi��n responsable, y **no** constituyen autorizaci��n impl��cita para uso institucional, trabajo derivado con fines comerciales o despliegue operativo. Cualquier reutilizaci��n, adaptaci��n o implementaci��n institucional debe reconocer expl��citamente al autor original y cumplir con la licencia del proyecto.
+
+Si este proyecto se cita, referencia o utiliza como base para desarrollos posteriores, incluya la siguiente atribuci��n:
+
+**Manuel Daza �� Autor y Arquitecto Original**
+GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)
+URL del proyecto: *[insertar enlace]*
+
+Para colaboraci��n, pilotos o acompa?amiento en la implementaci��n, por favor contacte directamente al autor.
