@@ -1,93 +1,154 @@
-# 📄 Clasificador de Documentos Testimoniales - UBPD
+# LLM Testimonial Classifier
 
-**Autor:** Manuel Daza Ramírez  
-**Versión:** 2025-02  
-**Demo para:** Unidad de Búsqueda de Personas dadas por Desaparecidas (UBPD)
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?logo=openai&logoColor=white)](https://openai.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-See_Terms-orange)](LICENSE)
 
----
+**Clasificador automático de documentos testimoniales para organizaciones de derechos humanos**
 
-## 📋 Descripción
-
-Este proyecto implementa un **clasificador automático de documentos testimoniales** utilizando Modelos de Lenguaje (LLM) con ontología controlada. Está diseñado para apoyar el trabajo de la UBPD en la clasificación y priorización de testimonios relacionados con el conflicto armado colombiano.
-
-### Contexto Institucional
-
-La **UBPD (Unidad de Búsqueda de Personas dadas por Desaparecidas)** es una entidad del Estado colombiano creada en el marco del Acuerdo de Paz de 2016. Su misión es dirigir, coordinar y contribuir a la implementación de acciones humanitarias de búsqueda de personas dadas por desaparecidas en el contexto y en razón del conflicto armado.
-
-La UBPD recibe miles de documentos testimoniales que contienen información crítica sobre:
-- **Hechos victimizantes** (desaparición forzada, homicidio, desplazamiento, violencia sexual)
-- **Actores armados** involucrados (guerrillas, paramilitares, fuerza pública)
-- **Territorios** donde ocurrieron los hechos (33 departamentos de Colombia)
-- **Períodos temporales** del conflicto (1985-2025)
+*Automatic testimonial document classifier for human rights organizations*
 
 ---
 
-## 🎯 Problema que Resuelve
+## 📋 Tabla de Contenidos
 
-La clasificación manual de testimonios presenta varios desafíos:
+- [Descripción](#-descripción)
+- [Casos de Uso](#-casos-de-uso)
+- [Características](#-características)
+- [Arquitectura](#-arquitectura)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Instalación](#-instalación)
+- [Configuración](#-configuración)
+- [Uso](#-uso)
+- [Ontología de Clasificación](#-ontología-de-clasificación)
+- [Base de Datos](#-base-de-datos)
+- [API de Módulos](#-api-de-módulos)
+- [Personalización](#-personalización)
+- [Próximos Pasos](#-próximos-pasos)
+- [Crédito Intelectual y Procedencia](#-crédito-intelectual-y-procedencia)
+- [Autor](#-autor)
+
+---
+
+## 📖 Descripción
+
+Sistema de **clasificación automática de documentos testimoniales** utilizando Modelos de Lenguaje (LLM) con ontología controlada. Diseñado para organizaciones de derechos humanos, comisiones de la verdad, fiscalías especializadas y entidades que procesan testimonios relacionados con conflictos armados, violaciones de derechos humanos o justicia transicional.
+
+### El Problema
 
 | Desafío | Descripción |
 |---------|-------------|
-| **Volumen** | Miles de documentos requieren clasificación |
-| **Inconsistencia** | Diferentes analistas pueden clasificar el mismo documento de formas distintas |
-| **Tiempo** | La clasificación manual consume recursos humanos escasos |
-| **Priorización** | Es difícil identificar rápidamente casos urgentes que requieren atención inmediata |
+| **Alto volumen** | Miles de testimonios pendientes de clasificación |
+| **Inconsistencia** | Variabilidad en criterios entre analistas |
+| **Tiempo limitado** | Recursos humanos escasos para tareas repetitivas |
+| **Priorización** | Dificultad para identificar casos urgentes |
 
-### Solución
+### La Solución
 
-Este sistema utiliza un **LLM (Large Language Model)** con una **ontología controlada** para:
+Un sistema que combina **GPT-4o** con una **ontología controlada y personalizable** para:
 
-- �?Clasificar automáticamente documentos según categorías predefinidas
-- �?Garantizar consistencia mediante vocabularios controlados
-- �?Calcular scores de prioridad para enrutamiento
-- �?Extraer fragmentos relevantes (highlights) para análisis posterior
-- �?Persistir resultados en PostgreSQL para análisis y auditoría
+- ✅ Clasificar documentos automáticamente en múltiples dimensiones
+- ✅ Garantizar consistencia mediante vocabularios estandarizados
+- ✅ Calcular scores de prioridad para enrutamiento de casos
+- ✅ Extraer fragmentos clave (highlights) para análisis humano
+- ✅ Persistir resultados en PostgreSQL para auditoría
 
 ---
 
-## 🏗�?Arquitectura del Sistema
+## 🎯 Casos de Uso
+
+Este clasificador puede ser utilizado por:
+
+| Organización | Aplicación |
+|--------------|------------|
+| **Comisiones de la Verdad** | Procesamiento de testimonios de víctimas y testigos |
+| **Fiscalías Especializadas** | Clasificación de declaraciones en casos de lesa humanidad |
+| **ONGs de Derechos Humanos** | Análisis de denuncias y reportes de campo |
+| **Unidades de Búsqueda** | Priorización de casos de personas desaparecidas |
+| **Tribunales de Justicia Transicional** | Categorización de evidencia testimonial |
+| **Organizaciones Internacionales** | Procesamiento de documentación humanitaria |
+
+---
+
+## ✨ Características
+
+- **Clasificación multi-etiqueta**: Tipo de documento, hechos, actores, territorio, período
+- **Ontología YAML extensible**: Fácil de personalizar para diferentes contextos
+- **Validación automática**: Corrección de códigos inválidos con valores por defecto
+- **Score de prioridad**: Cálculo automático para enrutamiento de casos
+- **Persistencia PostgreSQL**: Esquema normalizado para análisis y auditoría
+- **CLI completo**: Ejecución desde terminal con múltiples opciones
+- **Soporte Conda/pip**: Instalación flexible para diferentes entornos
+
+---
+
+## 🏗️ Arquitectura
 
 ```
-Texto crudo del documento
-         �?         �?┌─────────────────────────────�?�?  preprocessing.py          �? Normalización Unicode, limpieza
-�?  preprocess_text()         �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  prompts.py                �? Template few-shot + ontología
-�?  build_user_prompt()       �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  classifier.py             �? Llamada a OpenAI API (GPT-4o)
-�?  call_llm()                �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  classifier.py             �? Extracción y parsing JSON
-�?  parse_model_response()    �?└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  classifier.py             �? Validación contra ontología
-�?  validate_and_fix()        �? + reglas de negocio + priority_score
-└─────────────────────────────�?         �?         �?┌─────────────────────────────�?�?  db.py                     �? Persistencia en PostgreSQL
-�?  save_document_and_        �? (opcional)
-�?  classification()          �?└─────────────────────────────�?         �?         �?Clasificación final validada + almacenada
+┌─────────────────────────────────────────────────────────────────────┐
+│                        PIPELINE DE CLASIFICACIÓN                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐   │
+│  │  Documento   │───▶│preprocessing │───▶│     prompts.py       │   │
+│  │  Testimonial │    │     .py      │    │  (System + Few-shot) │   │
+│  └──────────────┘    └──────────────┘    └──────────┬───────────┘   │
+│                                                      │               │
+│                                                      ▼               │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────────┐   │
+│  │  PostgreSQL  │◀───│    db.py     │◀───│    classifier.py     │   │
+│  │   Database   │    │ (Persistir)  │    │  (LLM + Validación)  │   │
+│  └──────────────┘    └──────────────┘    └──────────────────────┘   │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
 ```
+
+### Flujo de Datos
+
+1. **Entrada**: Texto crudo del documento testimonial
+2. **Preprocesamiento**: Normalización Unicode, limpieza de espacios
+3. **Prompt Engineering**: Inyección de ontología + ejemplos few-shot
+4. **Clasificación LLM**: Llamada a GPT-4o con temperature=0
+5. **Validación**: Verificación contra ontología + reglas de negocio
+6. **Enriquecimiento**: Cálculo de priority_score
+7. **Persistencia**: Almacenamiento en PostgreSQL (opcional)
 
 ---
 
 ## 📁 Estructura del Proyecto
 
 ```
-ubpd-llm-testimonial-classifier/
+llm-testimonial-classifier/
+│
 ├── src/
-�?  ├── classifier.py         # Pipeline principal de clasificación
-�?  ├── db.py                  # Conexión PostgreSQL y persistencia
-�?  ├── ontology.py            # Carga y serialización de ontología
-�?  ├── preprocessing.py       # Limpieza y normalización de texto
-�?  ├── prompts.py             # System prompt y templates few-shot
-�?  └── runner.py              # CLI para ejecución desde terminal
-�?├── ontology_ubpd.yaml         # Ontología de clasificación UBPD
-├── requirements.txt           # Dependencias pip
-├── environment.yml            # Entorno Conda (Windows)
-├── .env                       # Variables de entorno (API keys, DB)
-�?├── run-classifier-conda.ps1   # Script PowerShell (Conda)
-├── run-classifier-gui.ps1     # Script PowerShell (GUI)
-�?├── notebooks/
-�?  └── UBPD_Demo_Clasificador_Testimonios_Commented.ipynb
-�?├── docs/                      # Documentación Jekyll
-�?  ├── architecture.html
-�?  ├── ontology.html
-�?  ├── api.html
-�?  └── demo.html
-�?├── _config.yml                # Configuración Jekyll para GitHub Pages
-└── README.md
+│   ├── classifier.py        # Pipeline principal de clasificación
+│   ├── db.py                 # Conexión y persistencia PostgreSQL
+│   ├── ontology.py           # Carga de ontología YAML
+│   ├── preprocessing.py      # Limpieza y normalización de texto
+│   ├── prompts.py            # System prompt y templates few-shot
+│   └── runner.py             # CLI para ejecución desde terminal
+│
+├── ontology.yaml             # Ontología de clasificación (personalizable)
+├── requirements.txt          # Dependencias pip
+├── environment.yml           # Entorno Conda (Windows)
+├── .env.example              # Plantilla de variables de entorno
+│
+├── run-classifier-conda.ps1  # Script PowerShell (Conda)
+├── run-classifier-gui.ps1    # Script PowerShell (GUI)
+│
+├── notebooks/
+│   └── Demo_Clasificador_Testimonios.ipynb
+│
+├── docs/                     # Documentación Jekyll
+│   ├── architecture.html
+│   ├── ontology.html
+│   ├── api.html
+│   └── demo.html
+│
+├── _config.yml               # Configuración GitHub Pages
+├── index.md                  # Homepage del sitio
+└── README.md                 # Este archivo
 ```
 
 ---
@@ -98,59 +159,72 @@ ubpd-llm-testimonial-classifier/
 
 - Python 3.9+ (recomendado 3.13)
 - PostgreSQL 14+ (opcional, para persistencia)
-- Cuenta de OpenAI con acceso a la API
+- API Key de OpenAI
 
-### Opción A: Instalación con pip
+### Opción A: pip (Linux/Mac/Windows)
 
 ```bash
-# 1. Clonar repositorio
-git clone https://github.com/manueldazar/ubpd-llm-testimonial-classifier.git
-cd ubpd-llm-testimonial-classifier
+# Clonar repositorio
+git clone https://github.com/manueldazar/llm-testimonial-classifier.git
+cd llm-testimonial-classifier
 
-# 2. Crear entorno virtual
+# Crear entorno virtual
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
+source venv/bin/activate        # Linux/Mac
+# venv\Scripts\activate         # Windows
 
-# 3. Instalar dependencias
+# Instalar dependencias
 pip install -r requirements.txt
 ```
 
-### Opción B: Instalación con Conda (Windows)
+### Opción B: Conda (Windows)
 
 ```bash
-# 1. Clonar repositorio
-git clone https://github.com/manueldazar/ubpd-llm-testimonial-classifier.git
-cd ubpd-llm-testimonial-classifier
+# Clonar repositorio
+git clone https://github.com/manueldazar/llm-testimonial-classifier.git
+cd llm-testimonial-classifier
 
-# 2. Crear entorno desde environment.yml
+# Crear entorno desde environment.yml
 conda env create -f environment.yml
 
-# 3. Activar entorno
-conda activate ubpd_env
+# Activar entorno
+conda activate classifier_env
 ```
 
-### Configuración de Variables de Entorno
+### Dependencias Principales
+
+| Paquete | Propósito |
+|---------|-----------|
+| `openai` | Cliente API OpenAI |
+| `pyyaml` | Parser de ontología YAML |
+| `psycopg2-binary` | Driver PostgreSQL |
+| `python-dotenv` | Variables de entorno |
+| `fastapi` | API REST (opcional) |
+| `uvicorn` | Servidor ASGI (opcional) |
+
+---
+
+## ⚙️ Configuración
+
+### Variables de Entorno
 
 Crear archivo `.env` en el directorio raíz:
 
 ```env
-# OpenAI API
-OPENAI_API_KEY=sk-tu-api-key-aqui
+# === OpenAI API ===
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxx
 
-# PostgreSQL (opcional)
+# === PostgreSQL (opcional) ===
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=ubpd
-DB_USER=ubpd
-DB_PASSWORD=ubpd
+DB_NAME=testimonials
+DB_USER=classifier
+DB_PASSWORD=tu_password_seguro
 ```
 
-> ⚠️ **IMPORTANTE:** Nunca commitear el archivo `.env` a control de versiones.
+> ⚠️ **Nunca commitear el archivo `.env` a Git**
 
-### Configuración de Base de Datos (Opcional)
-
-Si deseas persistir las clasificaciones:
+### Inicializar Base de Datos (Opcional)
 
 ```bash
 # Crear tablas en PostgreSQL
@@ -159,22 +233,22 @@ python src/db.py create-tables
 
 ---
 
-## 📖 Uso
+## 🚀 Uso
 
 ### Opción 1: Línea de Comandos (CLI)
 
 ```bash
-# Clasificar texto directo
-python src/runner.py --text "Mi hermano desapareció en 1998 en Urabá..."
+# Clasificar texto directo (sin guardar en BD)
+python src/runner.py --text "El testigo declara que en 1998..." --no-db
 
 # Clasificar desde archivo
+python src/runner.py --file documento.txt --no-db
+
+# Clasificar y guardar en PostgreSQL
 python src/runner.py --file documento.txt
 
-# Sin guardar en base de datos
-python src/runner.py --text "..." --no-db
-
-# Con identificador externo
-python src/runner.py --file doc.txt --external-id "CASO-2024-001" --source-system "SIIJEP"
+# Con metadatos adicionales
+python src/runner.py --file doc.txt --external-id "CASO-2024-001" --source-system "ARCHIVO"
 ```
 
 ### Opción 2: Como Módulo Python
@@ -183,10 +257,10 @@ python src/runner.py --file doc.txt --external-id "CASO-2024-001" --source-syste
 from classifier import classify_document
 
 testimonio = """
-Yo, María, cuento que en 1997, en el municipio de San Carlos, Antioquia, 
-hombres armados que se identificaron como de la guerrilla se llevaron a mi esposo. 
-Desde ese día no volvimos a saber de él. Después de eso comenzaron las amenazas 
-y nos tocó salir de la vereda e irnos para Medellín, dejando todo atrás.
+Yo, María, declaro que en 1997, en el municipio de San Carlos, 
+hombres armados se llevaron a mi esposo. Desde ese día no volvimos 
+a saber de él. Después comenzaron las amenazas y tuvimos que 
+desplazarnos a la ciudad.
 """
 
 resultado = classify_document(testimonio)
@@ -196,7 +270,7 @@ print(resultado)
 ### Opción 3: Notebook Jupyter
 
 ```bash
-jupyter lab notebooks/UBPD_Demo_Clasificador_Testimonios_Commented.ipynb
+jupyter lab notebooks/Demo_Clasificador_Testimonios.ipynb
 ```
 
 ### Resultado Esperado
@@ -210,7 +284,7 @@ jupyter lab notebooks/UBPD_Demo_Clasificador_Testimonios_Commented.ipynb
   "actores": ["ACT2"],
   "ruteo": "RU1",
   "highlights": [
-    "1997, en el municipio de San Carlos, Antioquia",
+    "1997, en el municipio de San Carlos",
     "se llevaron a mi esposo"
   ],
   "priority_score": 0.7
@@ -219,9 +293,9 @@ jupyter lab notebooks/UBPD_Demo_Clasificador_Testimonios_Commented.ipynb
 
 ---
 
-## 📚 Ontología UBPD
+## 📚 Ontología de Clasificación
 
-La ontología define el vocabulario controlado para la clasificación. Se carga desde `ontology_ubpd.yaml`.
+La ontología define el vocabulario controlado. Se carga desde `ontology.yaml` y es completamente personalizable.
 
 ### Tipo de Documento (`tipo_documento`)
 
@@ -277,96 +351,124 @@ La ontología define el vocabulario controlado para la clasificación. Se carga 
 | RU3 | Atención psicosocial |
 | RU4 | No prioritario |
 
-### Territorio
-
-Lista completa de los 33 departamentos de Colombia + "No identificado".
-
 ---
 
-## 📊 Sistema de Prioridad
+## 🗄️ Base de Datos
 
-El `priority_score` es un valor entre 0.0 y 1.0 calculado según:
-
-| Condición | Puntos | Justificación |
-|-----------|--------|---------------|
-| TH1 (Desaparición forzada) | +0.4 | Mandato principal de la UBPD |
-| TH4 (Violencia sexual) | +0.2 | Alto impacto, requiere atención especializada |
-| RU1 (Búsqueda e identificación) | +0.3 | Caso activo de búsqueda |
-| RU3 (Atención psicosocial) | +0.1 | Requiere acompañamiento |
-
-### Interpretación
+### Esquema Relacional
 
 ```
-0.0 - 0.3: Prioridad baja (documentos administrativos, no testimoniales)
-0.4 - 0.6: Prioridad media (testimonios con información parcial)
-0.7 - 1.0: Prioridad alta (desapariciones activas, casos urgentes)
+┌─────────────────────┐
+│   doc_document      │──────┐
+│   (documento base)  │      │
+└─────────────────────┘      │
+                             │ 1:N
+┌─────────────────────┐      │
+│ doc_classification_ │◀─────┘
+│ run (ejecución)     │──────┬──────┬──────┬──────┐
+└─────────────────────┘      │      │      │      │
+                             │      │      │      │
+    ┌────────────────────────┼──────┼──────┼──────┼────────────────┐
+    │                        │      │      │      │                │
+    ▼                        ▼      ▼      ▼      ▼                ▼
+┌────────┐  ┌────────┐  ┌────────┐ ┌────────┐ ┌────────┐  ┌────────────┐
+│_labels │  │ _hecho │  │ _terr  │ │ _actor │ │ _high  │  │  raw_json  │
+│ (1:1)  │  │ (1:N)  │  │ (1:N)  │ │ (1:N)  │ │ (1:N)  │  │  (JSONB)   │
+└────────┘  └────────┘  └────────┘ └────────┘ └────────┘  └────────────┘
 ```
-
----
-
-## 🗄�?Modelo de Base de Datos
-
-El sistema persiste documentos y clasificaciones en PostgreSQL con el siguiente esquema:
-
-```
-┌─────────────────────�?�?  doc_document      │──────�?�?  (documento base)  �?     �?└─────────────────────�?     �?                             �?1:N
-┌─────────────────────�?     �?�?doc_classification_ │◄─────�?�?run (ejecución)     │──────┬──────┬──────┬──────�?└─────────────────────�?     �?     �?     �?     �?                             �?     �?     �?     �?    ┌────────────────────────┼──────┼──────┼──────┼────────────────────�?    �?                       �?     �?     �?     �?                   �?    �?                       �?     �?     �?     �?                   �?┌─────────�? ┌─────────�? ┌─────�? ┌─────�? ┌─────�? ┌─────────────────�?�?_labels �? �?_hecho  �? │_terr�? │_actor�?│_high�? �?  raw_json      �?�?1:1)    �? �?(1:N)   �? �?1:N)�? �?1:N) �?�?1:N)�? �?  (JSONB)       �?└─────────�? └─────────�? └─────�? └─────�? └─────�? └─────────────────�?```
 
 ### Tablas Principales
 
-- `doc_document`: Documento original con texto y metadatos
-- `doc_classification_run`: Ejecución de clasificación (modelo, timestamp)
-- `doc_classification_labels`: Etiquetas simples + priority_score + raw_json
-- `doc_classification_hecho`: Hechos victimizantes (multi-etiqueta)
-- `doc_classification_territorio`: Territorios (multi-etiqueta)
-- `doc_classification_actor`: Actores (multi-etiqueta)
-- `doc_classification_highlight`: Fragmentos destacados
+| Tabla | Descripción |
+|-------|-------------|
+| `doc_document` | Documento original con texto y metadatos |
+| `doc_classification_run` | Ejecución de clasificación (modelo, timestamp) |
+| `doc_classification_labels` | Etiquetas simples + priority_score |
+| `doc_classification_hecho` | Hechos victimizantes (multi-etiqueta) |
+| `doc_classification_territorio` | Territorios (multi-etiqueta) |
+| `doc_classification_actor` | Actores (multi-etiqueta) |
+| `doc_classification_highlight` | Fragmentos destacados |
 
 ---
 
-## 🔍 Módulos del Sistema
+## 🔌 API de Módulos
 
 ### `preprocessing.py`
-Funciones de limpieza y normalización de texto:
-- `normalize_unicode()`: Normaliza caracteres a forma NFC
-- `collapse_spaces()`: Reduce espacios múltiples
-- `remove_headers_and_footers()`: Elimina encabezados institucionales
-- `preprocess_text()`: Pipeline completo
+
+| Función | Descripción |
+|---------|-------------|
+| `normalize_unicode(text)` | Normaliza caracteres a forma NFC |
+| `collapse_spaces(text)` | Reduce espacios múltiples |
+| `preprocess_text(text)` | Pipeline completo de limpieza |
 
 ### `ontology.py`
-Manejo de la ontología UBPD:
-- `load_ontology()`: Carga YAML a diccionario Python
-- `ontology_to_prompt_text()`: Serializa para incluir en prompts
+
+| Función | Descripción |
+|---------|-------------|
+| `load_ontology(path)` | Carga YAML a diccionario Python |
+| `ontology_to_prompt_text(ontology)` | Serializa para incluir en prompts |
 
 ### `prompts.py`
-Prompts estructurados para el LLM:
-- `SYSTEM_PROMPT`: Rol, ontología, reglas, formato JSON
-- `USER_TEMPLATE`: Ejemplos few-shot
-- `build_user_prompt()`: Inserta documento en template
+
+| Elemento | Descripción |
+|----------|-------------|
+| `SYSTEM_PROMPT` | Prompt de sistema con ontología y reglas |
+| `USER_TEMPLATE` | Template con ejemplos few-shot |
+| `build_user_prompt(text)` | Construye prompt con documento |
 
 ### `classifier.py`
-Pipeline principal:
-- `call_llm()`: Llamada a OpenAI API
-- `parse_model_response()`: Extracción segura de JSON
-- `validate_and_fix()`: Validación contra ontología
-- `compute_priority()`: Cálculo de priority_score
-- `classify_document()`: Función principal
+
+| Función | Descripción |
+|---------|-------------|
+| `call_llm(system, user)` | Llamada a OpenAI API |
+| `parse_model_response(raw)` | Extracción segura de JSON |
+| `validate_and_fix(pred)` | Validación contra ontología |
+| `compute_priority(pred)` | Cálculo de priority_score |
+| `classify_document(text)` | **Función principal** |
 
 ### `db.py`
-Persistencia en PostgreSQL:
-- `get_connection()`: Conexión a BD
-- `create_tables()`: Inicialización de esquema
-- `save_document_and_classification()`: Guardar documento + clasificación
 
-### `runner.py`
-Interfaz de línea de comandos:
-- Argumentos: `--text`, `--file`, `--no-db`, `--external-id`, `--source-system`
+| Función | Descripción |
+|---------|-------------|
+| `get_connection()` | Conexión a PostgreSQL |
+| `create_tables()` | Inicialización de esquema |
+| `save_document_and_classification()` | Persistir documento + clasificación |
 
 ---
 
-## ⚙️ Configuración Avanzada
+## 🎨 Personalización
 
-### Cambiar el Modelo
+### Modificar la Ontología
+
+Editar `ontology.yaml` para adaptar a tu contexto:
+
+```yaml
+tipo_hecho:
+  TH1: "Desaparición forzada"
+  TH2: "Homicidio"
+  TH8: "Nuevo tipo de hecho"  # Agregar nuevos códigos
+
+territorio:
+  departments:
+    - "Tu Región 1"
+    - "Tu Región 2"
+```
+
+### Ajustar Pesos de Prioridad
+
+En `classifier.py`, modificar `compute_priority()`:
+
+```python
+def compute_priority(pred: dict) -> float:
+    score = 0.0
+    hechos = set(pred.get("tipo_hecho", []))
+    
+    if "TH1" in hechos:  # Desaparición forzada
+        score += 0.4    # Ajustar peso según necesidad
+    # ...
+```
+
+### Cambiar Modelo LLM
 
 En `classifier.py`:
 
@@ -376,42 +478,14 @@ MODEL_NAME = "gpt-4o"        # Por defecto
 # MODEL_NAME = "gpt-3.5-turbo"  # Más económico
 ```
 
-### Parámetros del Modelo
-
-```python
-temperature=0.0  # Determinismo máximo para clasificación consistente
-```
-
-### Extender la Ontología
-
-Editar `ontology_ubpd.yaml` para agregar nuevos códigos:
-
-```yaml
-tipo_hecho:
-  TH1: "Desaparición forzada"
-  TH8: "Nuevo tipo de hecho"  # Agregar aquí
-```
-
----
-
-## 🧪 Reglas de Negocio
-
-El sistema implementa las siguientes reglas automáticas:
-
-1. **TD0 �?RU0**: Documentos no testimoniales no se enrutan
-2. **Actor por defecto**: Si no hay actor identificado, usar `["ACT0"]`
-3. **Territorio por defecto**: Si no hay ubicación, usar `["No identificado"]`
-4. **Validación de códigos**: Solo se aceptan códigos de la ontología
-
 ---
 
 ## 📈 Próximos Pasos
 
 ### Corto plazo
-- [ ] Agregar retry logic y manejo de rate limits
-- [ ] Implementar logging estructurado (JSON)
-- [ ] Validar ontología con expertos UBPD
-- [ ] Agregar más ejemplos few-shot
+- [ ] Retry logic y manejo de rate limits
+- [ ] Logging estructurado (JSON)
+- [ ] Más ejemplos few-shot para casos límite
 
 ### Mediano plazo
 - [ ] Batch processing para múltiples documentos
@@ -420,64 +494,63 @@ El sistema implementa las siguientes reglas automáticas:
 - [ ] Métricas de calidad (accuracy, F1)
 
 ### Largo plazo
-- [ ] Fine-tuning con datos etiquetados UBPD
+- [ ] Fine-tuning con datos etiquetados
 - [ ] Explicabilidad de clasificaciones
 - [ ] Búsqueda semántica con embeddings
-- [ ] Clasificación multi-documento
+- [ ] Soporte multi-idioma
 
 ---
 
-## 🌐 Documentación en Línea
+## 📜 Crédito Intelectual y Procedencia
 
-El proyecto incluye documentación Jekyll para GitHub Pages:
+### Español
 
-- **Home**: Introducción y overview
-- **Architecture**: Diagrama de arquitectura
-- **Ontology**: Detalle de códigos
-- **API**: Referencia de funciones
-- **Demo**: Ejemplos interactivos
+Este proyecto —incluyendo su arquitectura, el diseño de la ontología, la estrategia de prompt engineering, el plan de evaluación y la implementación de referencia— fue concebido, diseñado y desarrollado por **Manuel Daza**. Todos los componentes conceptuales (formulación del problema, justificación del esquema de datos, ontología de clasificación, plantillas de prompt, criterios de evaluación y flujos del demostrador) se originan en este repositorio y en su historial de commits.
 
-Acceder en: `https://manueldazar.github.io/ubpd-llm-testimonial-classifier`
+El código, la documentación y el enfoque metodológico se publican para ofrecer transparencia y fomentar una discusión responsable, y **no constituyen autorización implícita** para uso institucional, trabajo derivado con fines comerciales o despliegue operativo. Cualquier reutilización, adaptación o implementación institucional debe reconocer explícitamente al autor original y cumplir con la licencia del proyecto.
 
----
+**Si este proyecto se cita, referencia o utiliza como base para desarrollos posteriores, incluya la siguiente atribución:**
 
-## ⚠️ Notas Importantes
+> **Manuel Daza** — Autor y Arquitecto Original  
+> GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)  
+> URL del proyecto: [https://github.com/manueldazar/llm-testimonial-classifier](https://github.com/manueldazar/llm-testimonial-classifier)
 
-- Este es un **prototipo de demostración**
-- Los testimonios de ejemplo son **sintéticos** (no casos reales)
-- En producción se requiere:
-  - Auditoría de clasificaciones
-  - Revisión humana de casos prioritarios
-  - Monitoreo de calidad del modelo
-  - Cumplimiento de normativas de datos sensibles
+Para colaboración, pilotos o acompañamiento en la implementación, por favor contacte directamente al autor.
 
 ---
 
-## 📞 Contacto
+### English — Intellectual Credit and Provenance
+
+This project —including its architecture, ontology design, prompt engineering strategy, evaluation plan, and reference implementation— was conceived, designed, and developed by **Manuel Daza**. All conceptual components (problem formulation, data schema rationale, classification ontology, prompt templates, evaluation criteria, and demonstrator workflows) originate in this repository and its commit history.
+
+The code, documentation, and methodological approach are published to provide transparency and encourage responsible discussion, and **do not constitute implicit authorization** for institutional use, commercial derivative work, or operational deployment. Any reuse, adaptation, or institutional implementation must explicitly acknowledge the original author and comply with the project license.
+
+**If this project is cited, referenced, or used as a basis for further development, please include the following attribution:**
+
+> **Manuel Daza** — Original Author and Architect  
+> GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)  
+> Project URL: [https://github.com/manueldazar/llm-testimonial-classifier](https://github.com/manueldazar/llm-testimonial-classifier)
+
+For collaboration, pilots, or implementation support, please contact the author directly.
+
+---
+
+## 👨‍💻 Autor
 
 **Manuel Daza Ramírez**  
-AI Engineer - Prototipo de clasificación de documentos testimoniales
+AI Engineer
 
-- 🔗 LinkedIn: [linkedin.com/in/manueldazaramirez](https://linkedin.com/in/manueldazaramirez)
-- 📧 Email: manuel.dazaramirez@gmail.com
-- 🐙 GitHub: [github.com/manueldazar](https://github.com/manueldazar)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://linkedin.com/in/manueldazaramirez)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/manueldazar)
+[![Email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:manuel.dazaramirez@gmail.com)
 
 ---
 
-## 📄 Licencia
+## ⚠️ Aviso Legal
 
-Este proyecto es un prototipo de demostración desarrollado para mostrar capacidades de clasificación automática de documentos testimoniales usando LLMs.
+Este es un **prototipo de demostración**. Los testimonios de ejemplo son **sintéticos** y no representan casos reales. El despliegue en producción requiere:
 
-## Cr��dito Intelectual y Procedencia
-
-Este proyecto ��incluyendo su arquitectura, el dise?o de la ontolog��a, la estrategia de *prompt engineering*, el plan de evaluaci��n y la implementaci��n de referencia�� fue concebido, dise?ado y desarrollado por **Manuel Daza**. Todos los componentes conceptuales (formulaci��n del problema, justificaci��n del esquema de datos, ontolog��a de clasificaci��n, plantillas de *prompt*, criterios de evaluaci��n y flujos del demostrador) se originan en este repositorio y en su historial de *commits*.
-
-El c��digo, la documentaci��n y el enfoque metodol��gico se publican para ofrecer transparencia y fomentar una discusi��n responsable, y **no** constituyen autorizaci��n impl��cita para uso institucional, trabajo derivado con fines comerciales o despliegue operativo. Cualquier reutilizaci��n, adaptaci��n o implementaci��n institucional debe reconocer expl��citamente al autor original y cumplir con la licencia del proyecto.
-
-Si este proyecto se cita, referencia o utiliza como base para desarrollos posteriores, incluya la siguiente atribuci��n:
-
-**Manuel Daza �� Autor y Arquitecto Original**
-GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)
-URL del proyecto: *[insertar enlace]*
-
-Para colaboraci��n, pilotos o acompa?amiento en la implementaci��n, por favor contacte directamente al autor.
+- Revisión humana de clasificaciones de alta prioridad
+- Auditoría y logging para trazabilidad
+- Cumplimiento de normativas de protección de datos sensibles
+- Validación con expertos del dominio específico

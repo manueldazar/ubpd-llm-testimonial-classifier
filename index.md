@@ -1,351 +1,289 @@
 ---
 layout: default
-title: UBPD LLM Testimonial Classifier
-description: Clasificador automático de documentos testimoniales usando LLM | Automatic testimonial document classifier using LLM
+title: LLM Testimonial Classifier
+description: Clasificador automático de documentos testimoniales para organizaciones de derechos humanos | Automatic testimonial document classifier for human rights organizations
 lang: es
 ---
 
-<div class="lang-selector" style="text-align: right; margin-bottom: 2rem;">
-  <a href="#es" style="margin-right: 1rem;">🇨🇴 Español</a>
-  <a href="#en">🇺🇸 English</a>
-</div>
+# LLM Testimonial Classifier
 
-<style>
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.card {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  border-radius: 8px;
-  background: #fafafa;
-}
-</style>
+[🇪🇸 Español](#español) | [🇺🇸 English](#english)
 
-<a id="es"></a>
+---
 
-# 📄 Clasificador de Documentos Testimoniales UBPD
+## Español
 
-> **Sistema de clasificación automática de testimonios del conflicto armado colombiano mediante Inteligencia Artificial**
+### Clasificador de Documentos Testimoniales con IA
 
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![OpenAI API](https://img.shields.io/badge/OpenAI-GPT--4o-green.svg)](https://openai.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-Demo-orange.svg)](#)
+Sistema de **clasificación automática de documentos testimoniales** para organizaciones de derechos humanos, comisiones de la verdad y entidades que procesan testimonios relacionados con conflictos armados o justicia transicional.
 
-***
+---
 
-## 🎯 Propósito
+### El Problema
 
-Este proyecto desarrolla un **clasificador inteligente** para apoyar a la [Unidad de Búsqueda de Personas dadas por Desaparecidas (UBPD)](https://ubpd.gov.co/) en el procesamiento de miles de documentos testimoniales relacionados con el conflicto armado colombiano.
+Las organizaciones que trabajan con documentación testimonial enfrentan desafíos críticos:
 
-### El Desafío
+| Desafío | Impacto |
+|---------|---------|
+| **Alto volumen** | Miles de testimonios pendientes de clasificación |
+| **Inconsistencia** | Variabilidad en criterios entre analistas |
+| **Tiempo limitado** | Recursos humanos escasos |
+| **Priorización** | Dificultad para identificar casos urgentes |
 
-| Problema | Impacto |
-|----------|---------|
-| 📚 **Alto volumen** | Miles de testimonios pendientes de clasificación |
-| ⚖️ **Inconsistencia** | Variabilidad en criterios entre analistas |
-| ⏱️ **Tiempo limitado** | Recursos humanos escasos para tareas repetitivas |
-| 🎯 **Priorización** | Dificultad para identificar casos urgentes |
+---
 
 ### La Solución
 
-Un sistema que combina **Modelos de Lenguaje (LLM)** con una **ontología controlada** para:
+Un sistema que combina **Modelos de Lenguaje (GPT-4o)** con una **ontología controlada** para:
 
-- �?Clasificar documentos automáticamente  
-- �?Garantizar consistencia mediante vocabularios estandarizados  
-- �?Calcular scores de prioridad para enrutamiento  
-- �?Extraer fragmentos clave para análisis humano  
+- ✅ Clasificar documentos automáticamente en múltiples dimensiones
+- ✅ Garantizar consistencia mediante vocabularios estandarizados
+- ✅ Calcular scores de prioridad para enrutamiento de casos
+- ✅ Extraer fragmentos clave para análisis humano
+- ✅ Persistir resultados para auditoría
 
-***
+---
 
-## 🏗�?Arquitectura
+### Arquitectura del Sistema
 
-```text
-┌──────────────────�?    ┌──────────────────�?    ┌──────────────────�?�?  Documento      │────▶│   Preprocesado   │────▶│   Clasificación  �?�?  Testimonial    �?    �?  + Normalización�?    �?  LLM (GPT-4o)   �?└──────────────────�?    └──────────────────�?    └────────┬─────────�?                                                           �?┌──────────────────�?    ┌──────────────────�?             �?�?  Base de Datos  │◀────�?  Validación     │◀─────────────�?�?  PostgreSQL     �?    �?  + Ontología    �?└──────────────────�?    └──────────────────�?```
+```
+Documento       Preprocesamiento      Prompt + Ontología
+Testimonial  ──────────────────────▶  ──────────────────▶  LLM (GPT-4o)
+                                                                │
+                                                                ▼
+PostgreSQL   ◀────  Persistencia  ◀────  Validación + Score de Prioridad
+```
 
-***
+---
 
-## 📊 Ontología de Clasificación
+### Dimensiones de Clasificación
 
-El sistema clasifica documentos en múltiples dimensiones:
+**Tipo de Documento**
+- Testimonio de víctima directa
+- Testimonio de familiar
+- Testimonio de exintegrante
+- Testimonio de tercero testigo
 
-<div class="grid-container">
+**Hechos Victimizantes**
+- Desaparición forzada
+- Homicidio
+- Desplazamiento forzado
+- Violencia sexual
+- Reclutamiento de menores
+- Tortura
 
-<div class="card">
-<h4>📋 Tipo de Documento</h4>
-<ul>
-<li>Testimonio de víctima directa</li>
-<li>Testimonio de familiar</li>
-<li>Testimonio de exintegrante</li>
-<li>Testimonio de tercero</li>
-</ul>
-</div>
+**Actores**
+- Fuerza Pública
+- Guerrillas
+- Paramilitares
+- Grupos criminales
 
-<div class="card">
-<h4>⚠️ Hechos Victimizantes</h4>
-<ul>
-<li>Desaparición forzada</li>
-<li>Homicidio</li>
-<li>Desplazamiento forzado</li>
-<li>Violencia sexual</li>
-</ul>
-</div>
+**Territorio y Período**
+- Regiones geográficas configurables
+- Períodos históricos personalizables
 
-<div class="card">
-<h4>👥 Actores Armados</h4>
-<ul>
-<li>Fuerza Pública</li>
-<li>Guerrillas</li>
-<li>Paramilitares / AUC</li>
-<li>BACRIM</li>
-</ul>
-</div>
+---
 
-<div class="card">
-<h4>📍 Territorio &amp; Período</h4>
-<ul>
-<li>33 departamentos de Colombia</li>
-<li>Períodos: 1985-2025</li>
-<li>Ruteo a equipos especializados</li>
-</ul>
-</div>
-
-</div>
-
-***
-
-## 🚀 Inicio Rápido
+### Inicio Rápido
 
 ```bash
-# Clonar repositorio
-git clone https://github.com/manueldazar/ubpd-llm-testimonial-classifier.git
-cd ubpd-llm-testimonial-classifier
-
-# Instalar dependencias
+# Clonar e instalar
+git clone https://github.com/manueldazar/llm-testimonial-classifier.git
+cd llm-testimonial-classifier
 pip install -r requirements.txt
 
 # Configurar API key
 echo "OPENAI_API_KEY=sk-..." > .env
 
 # Clasificar un documento
-python src/runner.py --text "Mi hermano desapareció en 1998 en Urabá..." --no-db
+python src/runner.py --text "El testigo declara que en 1998..." --no-db
 ```
 
-***
+---
 
-## 📖 Documentación
+### Casos de Uso
+
+Este clasificador está diseñado para:
+
+- **Comisiones de la Verdad** — Procesamiento de testimonios de víctimas
+- **Fiscalías Especializadas** — Clasificación de declaraciones
+- **ONGs de Derechos Humanos** — Análisis de denuncias
+- **Unidades de Búsqueda** — Priorización de casos
+- **Tribunales de Justicia Transicional** — Categorización de evidencia
+- **Organizaciones Internacionales** — Documentación humanitaria
+
+---
+
+### Documentación
 
 | Sección | Descripción |
 |---------|-------------|
-| [🏛�?Arquitectura](docs/architecture.html) | Diseño técnico del sistema |
-| [📚 Ontología](docs/ontology.html) | Vocabulario controlado completo |
-| [🔌 API](docs/api.html) | Referencia de funciones |
-| [🎮 Demo](docs/demo.html) | Ejemplos interactivos |
-| [🧪 Tests](docs/tests/index.html) | Suite de pruebas |
+| [Arquitectura](docs/architecture.html) | Diseño técnico del sistema |
+| [Ontología](docs/ontology.html) | Vocabulario controlado completo |
+| [API](docs/api.html) | Referencia de funciones |
+| [Demo](docs/demo.html) | Ejemplos interactivos |
 
-***
+---
 
-## 👨‍�?Autor
+### Crédito Intelectual y Procedencia
 
-**Manuel Daza Ramírez**  
-AI Engineer  
+Este proyecto —incluyendo su arquitectura, el diseño de la ontología, la estrategia de prompt engineering, el plan de evaluación y la implementación de referencia— fue concebido, diseñado y desarrollado por **Manuel Daza**. Todos los componentes conceptuales (formulación del problema, justificación del esquema de datos, ontología de clasificación, plantillas de prompt, criterios de evaluación y flujos del demostrador) se originan en este repositorio y en su historial de commits.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue.svg)](https://linkedin.com/in/manueldazaramirez)  
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black.svg)](https://github.com/manueldazar)  
-[![Email](https://img.shields.io/badge/Email-Contact-red.svg)](mailto:manuel.dazaramirez@gmail.com)
+El código, la documentación y el enfoque metodológico se publican para ofrecer transparencia y fomentar una discusión responsable, y **no constituyen autorización implícita** para uso institucional, trabajo derivado con fines comerciales o despliegue operativo. Cualquier reutilización, adaptación o implementación institucional debe reconocer explícitamente al autor original y cumplir con la licencia del proyecto.
 
-***
+**Atribución requerida:**
 
-<a id="en"></a>
+> **Manuel Daza** — Autor y Arquitecto Original  
+> GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)
 
-# 📄 UBPD Testimonial Document Classifier
+Para colaboración, pilotos o acompañamiento en la implementación, por favor contacte directamente al autor.
 
-> **Automatic classification system for Colombian armed conflict testimonies using Artificial Intelligence**
+---
 
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![OpenAI API](https://img.shields.io/badge/OpenAI-GPT--4o-green.svg)](https://openai.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-Demo-orange.svg)](#)
+## English
 
-***
+### AI-Powered Testimonial Document Classifier
 
-## 🎯 Purpose
+**Automatic classification system for testimonial documents** designed for human rights organizations, truth commissions, and entities processing testimonies related to armed conflicts or transitional justice.
 
-This project develops an **intelligent classifier** to support the [Unit for the Search of Persons Deemed Disappeared (UBPD)](https://ubpd.gov.co/) in processing thousands of testimonial documents related to the Colombian armed conflict.
+---
 
-### The Challenge
+### The Problem
 
-| Problem | Impact |
-|---------|--------|
-| 📚 **High volume** | Thousands of testimonies pending classification |
-| ⚖️ **Inconsistency** | Variability in criteria among analysts |
-| ⏱️ **Limited time** | Scarce human resources for repetitive tasks |
-| 🎯 **Prioritization** | Difficulty identifying urgent cases |
+Organizations working with testimonial documentation face critical challenges:
+
+| Challenge | Impact |
+|-----------|--------|
+| **High volume** | Thousands of testimonies pending classification |
+| **Inconsistency** | Variability in criteria among analysts |
+| **Limited time** | Scarce human resources |
+| **Prioritization** | Difficulty identifying urgent cases |
+
+---
 
 ### The Solution
 
-A system that combines **Large Language Models (LLM)** with a **controlled ontology** to:
+A system combining **Large Language Models (GPT-4o)** with a **controlled ontology** to:
 
-- �?Automatically classify documents  
-- �?Ensure consistency through standardized vocabularies  
-- �?Calculate priority scores for routing  
-- �?Extract key fragments for human analysis  
+- ✅ Automatically classify documents across multiple dimensions
+- ✅ Ensure consistency through standardized vocabularies
+- ✅ Calculate priority scores for case routing
+- ✅ Extract key fragments for human analysis
+- ✅ Persist results for audit trails
 
-***
+---
 
-## 🏗�?Architecture
+### System Architecture
 
-```text
-┌──────────────────�?    ┌──────────────────�?    ┌──────────────────�?�?  Testimonial    │────▶│   Preprocessing  │────▶│   Classification �?�?  Document       �?    �?  + Normalization�?    �?  LLM (GPT-4o)   �?└──────────────────�?    └──────────────────�?    └────────┬─────────�?                                                           �?┌──────────────────�?    ┌──────────────────�?             �?�?  PostgreSQL     │◀────�?  Validation     │◀─────────────�?�?  Database       �?    �?  + Ontology     �?└──────────────────�?    └──────────────────�?```
+```
+Testimonial      Preprocessing        Prompt + Ontology
+Document     ──────────────────────▶  ──────────────────▶  LLM (GPT-4o)
+                                                                │
+                                                                ▼
+PostgreSQL   ◀────  Persistence   ◀────  Validation + Priority Score
+```
 
-***
+---
 
-## 📊 Classification Ontology
+### Classification Dimensions
 
-The system classifies documents across multiple dimensions:
+**Document Type**
+- Direct victim testimony
+- Family member testimony
+- Former combatant testimony
+- Third-party witness
 
-<div class="grid-container">
+**Victimizing Events**
+- Forced disappearance
+- Homicide
+- Forced displacement
+- Sexual violence
+- Child recruitment
+- Torture
 
-<div class="card">
-<h4>📋 Document Type</h4>
-<ul>
-<li>Direct victim testimony</li>
-<li>Family member testimony</li>
-<li>Former combatant testimony</li>
-<li>Third-party witness</li>
-</ul>
-</div>
+**Actors**
+- Public Forces
+- Guerrillas
+- Paramilitaries
+- Criminal groups
 
-<div class="card">
-<h4>⚠️ Victimizing Events</h4>
-<ul>
-<li>Forced disappearance</li>
-<li>Homicide</li>
-<li>Forced displacement</li>
-<li>Sexual violence</li>
-</ul>
-</div>
+**Territory and Period**
+- Configurable geographic regions
+- Customizable historical periods
 
-<div class="card">
-<h4>👥 Armed Actors</h4>
-<ul>
-<li>Public Forces</li>
-<li>Guerrillas</li>
-<li>Paramilitaries / AUC</li>
-<li>Criminal bands</li>
-</ul>
-</div>
+---
 
-<div class="card">
-<h4>📍 Territory &amp; Period</h4>
-<ul>
-<li>33 Colombian departments</li>
-<li>Periods: 1985-2025</li>
-<li>Routing to specialized teams</li>
-</ul>
-</div>
-
-</div>
-
-***
-
-## 🚀 Quick Start
+### Quick Start
 
 ```bash
-# Clone repository
-git clone https://github.com/manueldazar/ubpd-llm-testimonial-classifier.git
-cd ubpd-llm-testimonial-classifier
-
-# Install dependencies
+# Clone and install
+git clone https://github.com/manueldazar/llm-testimonial-classifier.git
+cd llm-testimonial-classifier
 pip install -r requirements.txt
 
 # Configure API key
 echo "OPENAI_API_KEY=sk-..." > .env
 
 # Classify a document
-python src/runner.py --text "My brother disappeared in 1998 in Urabá..." --no-db
+python src/runner.py --text "The witness states that in 1998..." --no-db
 ```
 
-***
+---
 
-## 📖 Documentation
+### Use Cases
+
+This classifier is designed for:
+
+- **Truth Commissions** — Processing victim testimonies
+- **Specialized Prosecutors** — Classifying statements
+- **Human Rights NGOs** — Analyzing complaints
+- **Search Units** — Prioritizing cases
+- **Transitional Justice Tribunals** — Categorizing evidence
+- **International Organizations** — Humanitarian documentation
+
+---
+
+### Documentation
 
 | Section | Description |
 |---------|-------------|
-| [🏛�?Architecture](docs/architecture.html) | System technical design |
-| [📚 Ontology](docs/ontology.html) | Complete controlled vocabulary |
-| [🔌 API](docs/api.html) | Function reference |
-| [🎮 Demo](docs/demo.html) | Interactive examples |
-| [🧪 Tests](docs/tests/index.html) | Test suite |
+| [Architecture](docs/architecture.html) | System technical design |
+| [Ontology](docs/ontology.html) | Complete controlled vocabulary |
+| [API](docs/api.html) | Function reference |
+| [Demo](docs/demo.html) | Interactive examples |
 
-***
+---
 
-## 🌍 Context: The Colombian Armed Conflict
+### Intellectual Credit and Provenance
 
-The UBPD (Unidad de Búsqueda de Personas dadas por Desaparecidas) is a Colombian state entity created under the 2016 Peace Agreement. Its mission is to lead humanitarian actions to search for persons disappeared in the context of the armed conflict.
+This project —including its architecture, ontology design, prompt engineering strategy, evaluation plan, and reference implementation— was conceived, designed, and developed by **Manuel Daza**. All conceptual components (problem formulation, data schema rationale, classification ontology, prompt templates, evaluation criteria, and demonstrator workflows) originate in this repository and its commit history.
 
-Key statistics:
-- **Duration**: Over 50 years of internal conflict  
-- **Disappeared persons**: Estimated 80,000+  
-- **Testimonies**: Thousands of documents from victims, families, and witnesses  
+The code, documentation, and methodological approach are published to provide transparency and encourage responsible discussion, and **do not constitute implicit authorization** for institutional use, commercial derivative work, or operational deployment. Any reuse, adaptation, or institutional implementation must explicitly acknowledge the original author and comply with the project license.
 
-This classifier aims to accelerate the processing of these testimonies while maintaining human oversight for critical decisions.
+**Required attribution:**
 
-***
+> **Manuel Daza** — Original Author and Architect  
+> GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)
 
-## 🔬 Technical Highlights
+For collaboration, pilots, or implementation support, please contact the author directly.
 
-### Prompt Engineering
-- **Few-shot learning** with domain-specific examples  
-- **Controlled vocabulary** injection in system prompt  
-- **Self-verification** instructions for the LLM  
-- **JSON schema enforcement** for structured output  
+---
 
-### Data Model
-- Normalized PostgreSQL schema for multi-label classification  
-- JSONB storage for raw LLM responses (auditability)  
-- UUID-based document tracking  
-
-### Validation Pipeline
-- Ontology-based code validation  
-- Business rules enforcement (e.g., TD0 �?RU0)  
-- Priority score calculation for case routing  
-
-***
-
-## 👨‍�?Author
+## Author / Autor
 
 **Manuel Daza Ramírez**  
-AI Engineer  
+AI Engineer
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue.svg)](https://linkedin.com/in/manueldazaramirez)  
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-black.svg)](https://github.com/manueldazar)  
-[![Email](https://img.shields.io/badge/Email-Contact-red.svg)](mailto:manuel.dazaramirez@gmail.com)
+[LinkedIn](https://linkedin.com/in/manueldazaramirez) | [GitHub](https://github.com/manueldazar) | [Email](mailto:manuel.dazaramirez@gmail.com)
 
-***
+---
 
-## ⚠️ Disclaimer
+## Disclaimer / Aviso Legal
 
-This is a **demonstration prototype**. All example testimonies are **synthetic** and do not represent real cases. Production deployment requires:
+**English:** This is a demonstration prototype. Example testimonies are synthetic and do not represent real cases. Production deployment requires human review, audit logging, and compliance with data protection regulations.
 
-- Human review of high-priority classifications  
-- Audit logging for accountability  
-- Compliance with sensitive data regulations  
-- Model quality monitoring  
+**Español:** Este es un prototipo de demostración. Los testimonios de ejemplo son sintéticos y no representan casos reales. El despliegue en producción requiere revisión humana, logging de auditoría y cumplimiento de normativas de protección de datos.
 
-## Cr��dito Intelectual y Procedencia
+---
 
-Este proyecto ��incluyendo su arquitectura, el dise?o de la ontolog��a, la estrategia de *prompt engineering*, el plan de evaluaci��n y la implementaci��n de referencia�� fue concebido, dise?ado y desarrollado por **Manuel Daza**. Todos los componentes conceptuales (formulaci��n del problema, justificaci��n del esquema de datos, ontolog��a de clasificaci��n, plantillas de *prompt*, criterios de evaluaci��n y flujos del demostrador) se originan en este repositorio y en su historial de *commits*.
-
-El c��digo, la documentaci��n y el enfoque metodol��gico se publican para ofrecer transparencia y fomentar una discusi��n responsable, y **no** constituyen autorizaci��n impl��cita para uso institucional, trabajo derivado con fines comerciales o despliegue operativo. Cualquier reutilizaci��n, adaptaci��n o implementaci��n institucional debe reconocer expl��citamente al autor original y cumplir con la licencia del proyecto.
-
-Si este proyecto se cita, referencia o utiliza como base para desarrollos posteriores, incluya la siguiente atribuci��n:
-
-**Manuel Daza �� Autor y Arquitecto Original**
-GitHub: [https://github.com/manueldazar](https://github.com/manueldazar)
-URL del proyecto: *[insertar enlace]*
-
-Para colaboraci��n, pilotos o acompa?amiento en la implementaci��n, por favor contacte directamente al autor.
+*LLM Testimonial Classifier · 2025 · Manuel Daza*
